@@ -20,12 +20,4 @@ fi
 # Update the lock file with current time
 echo "$current_time" > "$LOCK_FILE"
 
-# --- YOUR MUTE COMMAND GOES BELOW ---
-# Detect if using WirePlumber (Pipewire) or PulseAudio
-if command -v wpctl &> /dev/null; then
-    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-elif command -v pamixer &> /dev/null; then
-    pamixer --default-source -t
-else
-    pactl set-source-mute @DEFAULT_SOURCE@ toggle
-fi
+wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
