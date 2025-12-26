@@ -1,55 +1,63 @@
 #!/bin/bash
 
-t=0  # Set the redundancy variable
-main() {
-  # Get current hour
-  current_hour=$(date +%H | sed 's/^0//')
+WALLPAPER_DIR="$HOME/Pictures/wallpapers/p1"
+CACHE_FILE="$HOME/.cache/curwall.png"
 
-  # Set wallpaper based on time interval using hyprpaper arguments
-  if [[ $current_hour -ge 5 && $current_hour -le 10  && $t -ne 1 ]]; then
-    killall hyprpaper
-    hyprpaper --config ~/.config/hypr/hyprpaper/morning.conf &
-    cp ~/Pictures/wallpapers/p1/t1.png ~/.cache/curwall.png
-    wal -c
-    wal -qtsi .cache/curwall.png
-    killall waybar
-    waybar &
-    t=1
-  elif [[ $current_hour -ge 11 && $current_hour -le 16 && $t -ne 2 ]]; then
-    killall hyprpaper
-    hyprpaper --config ~/.config/hypr/hyprpaper/afternoon.conf &
-    cp ~/Pictures/wallpapers/p1/t2.png ~/.cache/curwall.png
-    wal -c
-    wal -qtsi .cache/curwall.png
-    killall waybar
-    waybar &
-    t=2
-  elif [[ $current_hour -ge 17 && $current_hour -le 18 && $t -ne 3 ]]; then
-    killall hyprpaper
-    hyprpaper --config ~/.config/hypr/hyprpaper/evening.conf &
-    cp ~/Pictures/wallpapers/p1/t3.png ~/.cache/curwall.png
-    wal -c
-    wal -qtsi .cache/curwall.png
-    killall waybar
-    waybar &
-    t=3
-  elif [[ ( $current_hour -ge 19 || $current_hour -le 4 ) &&  $t -ne 4 ]]; then
-    killall hyprpaper
-    hyprpaper --config ~/.config/hypr/hyprpaper/night.conf &
-    cp ~/Pictures/wallpapers/p1/t4.png ~/.cache/curwall.png
-    wal -c
-    wal -qtsi .cache/curwall.png
-    killall waybar
-    waybar &
-    t=4
-  fi
+IMG_MORNING="$WALLPAPER_DIR/t1.png"
+IMG_AFTERNOON="$WALLPAPER_DIR/t2.png"
+IMG_EVENING="$WALLPAPER_DIR/t3.png"
+IMG_NIGHT="$WALLPAPER_DIR/t4.png"
+
+# Initialize state tracker
+CURRENT_IMAGE=""
+
+apply_wallpaper() {
+    local new_image="$1"
+
+    # Only run if the image is different to avoid redundant processing
+    if [[ "$CURRENT_IMAGE" != "$new_image" ]]; then
+        echo "Switching wallpaper to: $new_image"
+
+        #Start hyprpaper if it's not running
+        if ! pgrep -x "hyprpaper" > /dev/null; then
+            hyprpaper &
+            sleep 1
+        fi
+
+        #Preload the NEW image into RAM
+        hyprctl hyprpaper preload "$new_image"
+
+        #Set the NEW image as wallpaper (The comma sets it for all monitors)
+        hyprctl hyprpaper wallpaper ",$new_image"
+
+        if [[ -n "$CURRENT_IMAGE" ]]; then
+            hyprctl hyprpaper unload "$CURRENT_IMAGE"
+        fi
+
+        cp "$new_image" "$CACHE_FILE"
+        wal -c
+        wal -qtsi "$CACHE_FILE"
+
+        killall -SIGUSR2 waybar || (killall waybar; waybar &)
+
+        #Update the current state
+        CURRENT_IMAGE="$new_image"
+    fi
 }
 
-# Set wallpaper initially
-main
-
-# Run the script periodically
+#Main Logic Loop
 while true; do
-  sleep 60  # Change the interval here (in seconds)
-  main
+    hour=$(date +%-H)
+
+    if [[ $hour -le 4 || $hour -ge 19 ]]; then
+        apply_wallpaper "$IMG_NIGHT"
+    elif [[ $hour -le 10 ]]; then
+        apply_wallpaper "$IMG_MORNING"
+    elif [[ $hour -le 16 ]]; then
+        apply_wallpaper "$IMG_AFTERNOON"
+    else
+        apply_wallpaper "$IMG_EVENING"
+    fi
+
+    sleep 60
 done
