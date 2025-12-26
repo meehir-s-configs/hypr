@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Function to set wallpaper with hyprpaper arguments
 t=0  # Set the redundancy variable
-set_wallpaper() {
+main() {
   # Get current hour
   current_hour=$(date +%H | sed 's/^0//')
 
@@ -47,10 +46,10 @@ set_wallpaper() {
 }
 
 # Set wallpaper initially
-set_wallpaper
+main
 
 # Run the script periodically
 while true; do
   sleep 60  # Change the interval here (in seconds)
-  set_wallpaper
+  main
 done
