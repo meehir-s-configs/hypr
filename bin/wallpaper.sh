@@ -36,7 +36,7 @@ apply_wallpaper() {
 
         cp "$new_image" "$CACHE_FILE"
 
-        matugen image "$new_image" --mode dark --type scheme-expressive
+        matugen image "$new_image" --mode dark --type scheme-fruit-salad
 
         killall -SIGUSR2 waybar || (killall waybar; waybar &)
 
