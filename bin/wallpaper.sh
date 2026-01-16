@@ -39,7 +39,7 @@ apply_wallpaper() {
         matugen image "$new_image" --mode dark --type scheme-fruit-salad
 
         swaync-client -R && swaync-client -rs
-        killall -SIGUSR2 waybar
+        killall -SIGUSR2 waybar || (killall waybar; waybar &) #the redundant command is for when waybar isn't running beforehand
 
         #Update the current state
         CURRENT_IMAGE="$new_image"
