@@ -38,6 +38,7 @@ apply_wallpaper() {
 
         matugen image "$new_image" --mode dark --type scheme-fruit-salad
 
+        swaync-client -R && swaync-client -rs
         killall -SIGUSR2 waybar
 
         #Update the current state
