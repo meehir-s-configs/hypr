@@ -38,7 +38,7 @@ apply_wallpaper() {
 
         matugen image "$new_image" --mode dark --type scheme-fruit-salad
 
-        killall -SIGUSR2 waybar || (killall waybar; waybar &)
+        killall -SIGUSR2 waybar
 
         #Update the current state
         CURRENT_IMAGE="$new_image"
