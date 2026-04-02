@@ -36,7 +36,7 @@ apply_wallpaper() {
 
         cp "$new_image" "$CACHE_FILE"
 
-        matugen image "$new_image" --mode dark --type scheme-fruit-salad
+        matugen image "$new_image" --mode dark --type scheme-fruit-salad --source-color-index 0
 
         swaync-client -R && swaync-client -rs
         killall -SIGUSR2 waybar || (killall waybar; waybar &) #the redundant command is for when waybar isn't running beforehand
