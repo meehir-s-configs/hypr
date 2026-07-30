@@ -126,9 +126,25 @@ hl.config({
 })
 
 hl.gesture({
-    fingers = 4,
-    direction = "horizontal",
-    action  = "workspace"
+    fingers     = 4,
+    direction   = "horizontal",
+    action      = "workspace"
+})
+
+hl.gesture({
+    fingers     = 3,
+    direction   = "pinchin",
+    action      = "cursorZoom",
+    zoom_level  = 1.2,
+    mode        = "mult"
+})
+
+hl.gesture({
+    fingers     = 3,
+    direction   = "pinchout",
+    action      = "cursorZoom",
+    zoom_level  = -1.2,
+    mode        = "mult"
 })
 
 -- MISC
@@ -322,8 +338,8 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"))
 
 -- Volume Control
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true })
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true , repeating = true})
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true , repeating = true})
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
 
 -- Microphone Control
@@ -361,8 +377,8 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Zoom in and out
-hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(hyprctl -j getoption cursor:zoom_factor | jq -r \'.float + 0.5\'"))
-hl.bind(mainMod .. " + CTRL + mouse_up", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(hyprctl -j getoption cursor:zoom_factor | jq -r \'.float - 0.5\'"))
+hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(hyprctl -j getoption cursor:zoom_factor | jq -r \'.float + 0.5\'"))
+hl.bind(mainMod .. " + SHIFT + mouse_up", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(hyprctl -j getoption cursor:zoom_factor | jq -r \'.float - 0.5\'"))
 hl.bind(mainMod .. " + CTRL + SHIFT + mouse_up", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 1"))
 
 -- playerctl Media Control
