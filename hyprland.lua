@@ -62,7 +62,7 @@ hl.config({
     },
 
     -- look and feel
-    
+
     general = {
         gaps_in = 5,
         gaps_out = 5,
@@ -137,6 +137,13 @@ hl.gesture({
     action      = "cursorZoom",
     zoom_level  = 1,
     mode        = "live"
+})
+
+hl.gesture({
+    fingers = 4,
+    direction = "pinch",
+    action = "cursorZoom",
+    zoom_level = 1.0
 })
 
 -- MISC
