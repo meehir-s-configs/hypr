@@ -131,11 +131,12 @@ hl.gesture({
     action      = "workspace"
 })
 
+local zoomLevel = 1.2
 hl.gesture({
     fingers     = 3,
     direction   = "pinchin",
     action      = "cursorZoom",
-    zoom_level  = 1.2,
+    zoom_level  = zoomLevel,
     mode        = "mult"
 })
 
@@ -143,7 +144,7 @@ hl.gesture({
     fingers     = 3,
     direction   = "pinchout",
     action      = "cursorZoom",
-    zoom_level  = -1.2,
+    zoom_level  = -zoomLevel,
     mode        = "mult"
 })
 
