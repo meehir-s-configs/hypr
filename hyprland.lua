@@ -369,9 +369,21 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Zoom in and out
-hl.bind(mainMod .. " + SHIFT + mouse_down", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(hyprctl -j getoption cursor:zoom_factor | jq -r \'.float + 0.5\'"))
-hl.bind(mainMod .. " + SHIFT + mouse_up", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor $(hyprctl -j getoption cursor:zoom_factor | jq -r \'.float - 0.5\'"))
-hl.bind(mainMod .. " + CTRL + SHIFT + mouse_up", hl.dsp.exec_cmd("hyprctl keyword cursor:zoom_factor 1"))
+hl.bind(mainMod .. " + SHIFT + mouse_up", function()
+    local current = hl.get_config("cursor.zoom_factor") or 1.0
+    hl.config({ cursor = { zoom_factor = current + 0.5 } })
+end)
+
+hl.bind(mainMod .. " + SHIFT + mouse_down", function()
+    local current = hl.get_config("cursor.zoom_factor") or 1.0
+    if current > 1.0 then
+        hl.config({ cursor = { zoom_factor = math.max(1.0, current - 0.5) } })
+    end
+end)
+
+hl.bind(mainMod .. " + CTRL + SHIFT + mouse_up", function()
+    hl.config({ cursor = { zoom_factor = 1.0 } })
+end)
 
 -- playerctl Media Control
 hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("playerctl play-pause"))
