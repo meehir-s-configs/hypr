@@ -315,7 +315,7 @@ hl.bind(mainMod .. " + SHIFT + period", hl.dsp.layout("swapcol r"))
 hl.bind(mainMod .. " + bracketleft", hl.dsp.layout("colresize -conf"))
 hl.bind(mainMod .. " + bracketright", hl.dsp.layout("colresize +conf"))
 
-hl.bind(mainMod .. " + T", hl.dsp.layout("togglefit"))
+-- hl.bind(mainMod .. " + T", hl.dsp.layout("togglefit"))
 
 
 -- Special Binds
