@@ -91,7 +91,7 @@ hl.config({
         shadow = {
             enabled = true,
             range = 10,
-            render_power = 6,
+            render_power = 4,
             color = 0xee1a1a1a,
         },
     },
