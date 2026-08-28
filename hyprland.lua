@@ -257,6 +257,12 @@ hl.window_rule({
     size = {"monitor_w*0.2", "monitor_h*0.18"}
 })
 
+
+-- Rule for Immedieate tearing for games
+hl.window_rule({
+    match = { class = "cs2" }, immediate = true
+})
+
 -- Layer Rules
 
 -- Sway Notification Center
