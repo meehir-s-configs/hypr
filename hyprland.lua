@@ -335,7 +335,7 @@ hl.bind(mainMod .. " + F10", hl.dsp.pass({ window = "class:^(com\\.obsproject\\.
 
 -- Screenshots
 hl.bind("print", hl.dsp.exec_cmd("hyprshot -m output -m active -o ~/Pictures/Screenshots"))
-hl.bind("CTRL" .. " + print", hl.dsp.exec_cmd("hyprshot -m region -o ~/test1"))
+hl.bind("CTRL" .. " + print", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots/Partial"))
 hl.bind("CTRL" .. " + SHIFT + print", hl.dsp.exec_cmd("hyprshot -m region --clipboard-only"))
 
 -- Brightness Control
