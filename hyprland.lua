@@ -399,6 +399,6 @@ hl.bind(mainMod .. " + CTRL + SHIFT + mouse_up", function()
 end)
 
 -- playerctl Media Control
-hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("playerctl play-pause"))
-hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("playerctl previous"))
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("playerctl next"))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true})
+hl.bind(mainMod .. " + SHIFT + N", hl.dsp.exec_cmd("playerctl previous"), { locked = true})
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("playerctl next"), { locked = true})
